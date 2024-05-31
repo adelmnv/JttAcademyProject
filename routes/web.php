@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\{HomeController, PostController, CoachController, PlayerController, PracticeController, TournamentController};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/',[HomeController::class,'index'])->name('main');
+Route::get('/about',[HomeController::class,'about'])->name('about');
+
+Route::get('/login' ,[HomeController::class,'user_login'])->name('user.login');
+Route::post('/login' ,[HomeController::class,'user_auth'])->name('user.auth');
+Route::get('/logout' ,[HomeController::class,'user_logout'])->name('user.logout');
+
+Route::get('/dash',[HomeController::class,'admin_dash'])->name('user.dash')->middleware('auth');
+
+Route::get('/posts',[PostController::class,'posts'])->name('posts');
+Route::get('/posts/{post_id?}/view/',[PostController::class,'view'])->name('posts.view')->where('post_id','[0-9]+');
+Route::get('/posts/category/by_category/{category_id?}',[PostController::class,'posts_by_category'])->name('posts.by_category');
+Route::get('/posts/{post_id?}/edit/',[PostController::class,'edit'])->name('posts.edit')->middleware('auth');
+Route::post('/posts/{post_id?}/edit/',[PostController::class,'update'])->name('posts.update')->middleware('auth');
+
+Route::get('/coaches',[CoachController::class,'coaches'])->name('coaches');
+Route::get('/coaches/{coach_id?}/view/',[CoachController::class,'view'])->name('coaches.view')->where('coach_id','[0-9]+');
+Route::get('/coaches/{coach_id?}/edit/',[CoachController::class,'edit'])->name('coaches.edit')->middleware('auth');
+Route::post('/coaches/{coach_id?}/edit/',[CoachController::class,'update'])->name('coaches.update')->middleware('auth');
+
+Route::get('/players',[PlayerController::class,'players'])->name('players');
+Route::get('/players/{player_id?}/edit/',[PlayerController::class,'edit'])->name('players.edit')->middleware('auth');
+Route::post('/players/{player_id?}/edit/',[PlayerController::class,'update'])->name('players.update')->middleware('auth');
+
+Route::get('/practices', [PracticeController::class,'practices'])->name('practices');
+Route::get('/practices/type/by_type/{type_id?}',[PracticeController::class,'practices_by_type'])->name('practices.by_type');
+Route::get('/practices/{practice_id?}/type/{type_id?}/create_application/',[PracticeController::class,'create_application'])->name('practices.create_application');
+Route::post('/practices/{practice_id?}/type/{type_id?}/store_application/',[PracticeController::class,'store_application'])->name('practices.store_application');
+Route::get('/practices/{practice_id?}/edit/',[PracticeController::class,'edit'])->name('practices.edit')->middleware('auth');;
+Route::post('/practices/{practice_id?}/update/',[PracticeController::class,'update'])->name('practices.update')->middleware('auth');
+
+
+Route::get('/tournaments',[TournamentController::class,'tournaments'])->name('tournaments');
+Route::get('/tournaments/{tournament_id?}/view/',[TournamentController::class,'view'])->name('tournaments.view')->where('tournament_id','[0-9]+');
+Route::get('/tournaments/{tournament_id?}/create_registration/',[TournamentController::class,'create_registration'])->name('tournaments.create_registration');
+Route::post('/tournaments/{tournament_id?}/store_registration/',[TournamentController::class,'store_registration'])->name('tournaments.store_registration');
+Route::get('/tournaments/{tournament_id?}/edit/',[TournamentController::class,'edit'])->name('tournaments.edit')->middleware('auth');;
+Route::post('/tournaments/{tournament_id?}/update/',[TournamentController::class,'update'])->name('tournaments.update')->middleware('auth');
+
+
+
+
