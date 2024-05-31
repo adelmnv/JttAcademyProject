@@ -12,7 +12,7 @@
         <a href="{{ route('posts') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Наш блог</a>
         @auth
             <a href="{{ route('user.dash') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Панель</a>
-            <a href="{{route ('user.logout') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Logout</a>
+            <a href="{{route ('user.logout') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Выйти</a>
         @endauth
     </nav>
     </div>

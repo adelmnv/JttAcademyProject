@@ -24,9 +24,19 @@
                 <li>
                     <a href="{{ route('posts') }}" class="hover:text-green-500 me-4 md:me-6">Наш блог</a>
                 </li>
-                <li>
-                    <a href="{{ route('user.login') }}" class="hover:text-green-500 me-4 md:me-6">Войти</a>
-                </li>
+                @guest
+                    <li>
+                        <a href="{{ route('user.login') }}" class="hover:text-green-500 me-4 md:me-6">Войти</a>
+                    </li>
+                @endguest
+                @auth
+                    <li>
+                        <a href="{{ route('user.dash') }}" class="hover:text-green-500 me-4 md:me-6">Панель</a>
+                    </li>
+                    <li>
+                        <a href="{{route ('user.logout') }}" class="hover:text-green-500 me-4 md:me-6">Выйти</a>
+                    </li>
+                @endauth
                 <!-- <li>
                     <a href="#" class="hover:text-green-500 me-4 md:me-6">Privacy Policy</a>
                 </li>
