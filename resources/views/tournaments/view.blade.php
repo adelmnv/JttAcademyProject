@@ -81,18 +81,35 @@
                     <thead>
                         <tr>
                             <th class="border border-gray-400 px-4 py-2">#</th>
+                            <th class="border border-gray-400 px-4 py-2">Дата заявки</th>
                             <th class="border border-gray-400 px-4 py-2">ФИО</th>
                             <th class="border border-gray-400 px-4 py-2">Дата рождения</th>
-                            <th class="border border-gray-400 px-4 py-2">Телефон</th>
+                            @auth
+                                <th class="border border-gray-400 px-4 py-2">Телефон</th>
+                                <th class="border border-gray-400 px-4 py-2">Операции</th>
+                            @endauth
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($participants->where('gender', 'М') as $participant)
-                            <tr>
+                            <tr @if($participant->status == 0) class="bg-red-200 text-red-600" @endif>
                                 <td class="border border-gray-400 px-4 py-2">{{ $loop->iteration }}</td>
+                                <td class="border border-gray-400 px-4 py-2">{{ strftime("%d.%m.%Y", strtotime($participant->created_at))}}</td>
                                 <td class="border border-gray-400 px-4 py-2">{{ $participant->fio }}</td>
                                 <td class="border border-gray-400 px-4 py-2">{{ strftime("%d.%m.%Y", strtotime($participant->birth_date))}}</td>
-                                <td class="border border-gray-400 px-4 py-2">{{ $participant->phone }}</td>
+                                @auth
+                                    <td class="border border-gray-400 px-4 py-2">{{ $participant->phone }}</td>
+                                    @if($participant->status == 0)
+                                    <td class="border border-gray-400 px-4 py-2 text-center">Игрок снят с турнира</td>
+                                    @else
+                                        <td class="border border-gray-400 px-4 py-2">
+                                            <div class="flex justify-evenly">
+                                                <a href="{{ route('tournaments', ['participant_id' => $participant->id]) }}" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition-all duration-300">Редактировать</a>
+                                                <a href="#" onclick="confirmDelete('{{ $participant->id }}', '{{ $participant->fio }}', '{{ $tournament->name }}')"  class="remove-player-link bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-all duration-300">Снять игрока</a>
+                                            </div>
+                                        </td>
+                                    @endif
+                                @endauth
                             </tr>
                         @endforeach
                     </tbody>
@@ -110,16 +127,32 @@
                             <th class="border border-gray-400 px-4 py-2">#</th>
                             <th class="border border-gray-400 px-4 py-2">ФИО</th>
                             <th class="border border-gray-400 px-4 py-2">Дата рождения</th>
-                            <th class="border border-gray-400 px-4 py-2">Телефон</th>
+                            @auth
+                                <th class="border border-gray-400 px-4 py-2">Телефон</th>
+                                <th class="border border-gray-400 px-4 py-2">Операции</th>
+                            @endauth
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($participants->where('gender', 'Ж') as $participant)
-                            <tr>
+                            <tr @if($participant->status == 0) class="bg-red-200 text-red-600" @endif>
                                 <td class="border border-gray-400 px-4 py-2">{{ $loop->iteration }}</td>
+                                <td class="border border-gray-400 px-4 py-2">{{ strftime("%d.%m.%Y", strtotime($participant->created_at))}}</td>
                                 <td class="border border-gray-400 px-4 py-2">{{ $participant->fio }}</td>
                                 <td class="border border-gray-400 px-4 py-2">{{ strftime("%d.%m.%Y", strtotime($participant->birth_date))}}</td>
-                                <td class="border border-gray-400 px-4 py-2">{{ $participant->phone }}</td>
+                                @auth
+                                    <td class="border border-gray-400 px-4 py-2">{{ $participant->phone }}</td>
+                                    @if($participant->status == 0)
+                                    <td class="border border-gray-400 px-4 py-2 text-center">Игрок снят с турнира</td>
+                                    @else
+                                        <td class="border border-gray-400 px-4 py-2">
+                                            <div class="flex justify-evenly">
+                                                <a href="{{ route('tournaments', ['participant_id' => $participant->id]) }}" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition-all duration-300">Редактировать</a>
+                                                <a href="#" onclick="confirmDelete('{{ $participant->id }}', '{{ $participant->fio }}', '{{ $tournament->name }}')"  class="remove-player-link bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-all duration-300">Снять игрока</a>
+
+                                        </td>
+                                    @endif
+                                @endauth
                             </tr>
                         @endforeach
                     </tbody>
@@ -140,6 +173,23 @@
             @endforeach
         @endif
     </div>
+
+    <div id="confirmModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 hidden">
+        <div class="bg-white p-6 rounded-lg">
+            <h2 class="text-lg font-bold mb-4">Подтвердите снятие игрока</h2>
+            <p id="confirmMessage" class="text-xl font-bold mb-4">Вы уверены, что хотите снять игрока с турнира?</p>
+            <div class="flex justify-between">
+                <form id="deleteForm" action="" method="POST">
+                    @csrf
+                    @method('POST')
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-all duration-300 cursor-pointer">Подтвердить</button>
+                    <button id="cancelBtn" class="bg-gray-500 text-white px-4 py-2 rounded-full hover:bg-gray-600 transition-all duration-300 cursor-pointer ml-4">Отмена</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>
 @endsection
 
@@ -154,6 +204,9 @@
         const fileBtn = document.getElementById('fileBtn');
         const listView = document.getElementById('listView');
         const fileView = document.getElementById('fileView');
+
+        const cancelBtn = document.getElementById('cancelBtn');
+        const modal = document.getElementById('confirmModal');
 
         listView.style.display = 'block';
         fileView.style.display = 'none';
@@ -186,6 +239,22 @@
             fileBtn.classList.add('bg-lime-500');
             listBtn.classList.remove('bg-lime-500');
         });
+
+        cancelBtn.addEventListener('click', function () {
+            event.preventDefault();
+            modal.classList.add('hidden');
+        });
+
     });
+
+    function confirmDelete(id,fio,tournament_name) {
+        const modal = document.getElementById('confirmModal');
+        const deleteForm = document.getElementById('deleteForm');
+        const confirmMessage = document.getElementById('confirmMessage');
+
+        deleteForm.action = `/tournaments/remove/${id}`;
+        confirmMessage.textContent = `Вы уверены, что хотите снять игрока ${fio} с турнира "${tournament_name}"?`;
+        modal.classList.remove('hidden');
+    }
 </script>
 

@@ -51,9 +51,9 @@ Route::get('/practices', [PracticeController::class,'practices'])->name('practic
 Route::get('/practices/type/by_type/{type_id?}',[PracticeController::class,'practices_by_type'])->name('practices.by_type');
 Route::get('/practices/{practice_id?}/type/{type_id?}/create_application/',[PracticeController::class,'create_application'])->name('practices.create_application');
 Route::post('/practices/{practice_id?}/type/{type_id?}/store_application/',[PracticeController::class,'store_application'])->name('practices.store_application');
-Route::get('/practices/{practice_id?}/edit/',[PracticeController::class,'edit'])->name('practices.edit')->middleware('auth');;
+Route::get('/practices/{practice_id?}/edit/',[PracticeController::class,'edit'])->name('practices.edit')->middleware('auth');
 Route::post('/practices/{practice_id?}/update/',[PracticeController::class,'update'])->name('practices.update')->middleware('auth');
-Route::get('/practices/create/',[PracticeController::class,'create'])->name('practices.create')->middleware('auth');;
+Route::get('/practices/create/',[PracticeController::class,'create'])->name('practices.create')->middleware('auth');
 Route::post('/practices/create/',[PracticeController::class,'save'])->name('practices.save')->middleware('auth');
 
 
@@ -61,10 +61,12 @@ Route::get('/tournaments',[TournamentController::class,'tournaments'])->name('to
 Route::get('/tournaments/{tournament_id?}/view/',[TournamentController::class,'view'])->name('tournaments.view')->where('tournament_id','[0-9]+');
 Route::get('/tournaments/{tournament_id?}/create_registration/',[TournamentController::class,'create_registration'])->name('tournaments.create_registration');
 Route::post('/tournaments/{tournament_id?}/store_registration/',[TournamentController::class,'store_registration'])->name('tournaments.store_registration');
-Route::get('/tournaments/{tournament_id?}/edit/',[TournamentController::class,'edit'])->name('tournaments.edit')->middleware('auth');;
+Route::get('/tournaments/{tournament_id?}/edit/',[TournamentController::class,'edit'])->name('tournaments.edit')->middleware('auth');
 Route::post('/tournaments/{tournament_id?}/update/',[TournamentController::class,'update'])->name('tournaments.update')->middleware('auth');
-Route::get('/tournaments/create/',[TournamentController::class,'create'])->name('tournaments.create')->middleware('auth');;
+Route::get('/tournaments/create/',[TournamentController::class,'create'])->name('tournaments.create')->middleware('auth');
 Route::post('/tournaments/create/',[TournamentController::class,'save'])->name('tournaments.save')->middleware('auth');
+Route::post('tournaments/remove/{participant_id}', [TournamentController::class,'remove_participant'])->name('tournaments.remove')->middleware('auth');
+
 
 
 

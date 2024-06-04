@@ -23,7 +23,6 @@ class TournamentController extends Controller
         return view('tournaments.tournaments_page', compact('tournamentsByMonth'));
     }
 
-
     public function view($tournament_id){
         $tournament = Tournament::findOrFail($tournament_id);
         $participants = Participant::where('tournament_id', $tournament_id)->get();
@@ -31,64 +30,11 @@ class TournamentController extends Controller
         return view('tournaments.view',compact('tournament','participants','files'));
     }
 
-    public function create_registration($tournament_id) {
-        try {
-            $tournament = Tournament::findOrFail($tournament_id);
-            return view('tournaments.create_registration', compact('tournament'));
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
-            return redirect()->back()->with('error', 'Tournament not found.');
-        }
-    }
-
-    public function store_registration(Request $request){
-
-        $validated = $request->validate([
-            'tournament_id' =>'required',
-            'fio' => 'required|min:4|max:255',
-            'birth_date' => 'required',
-            'gender'=>'required',
-            'phone' => ['required', 'regex:/^\+[1-9]\d{1,14}$/']
-        ]);
-    
-        $tournament = Tournament::findOrFail($validated['tournament_id']);
-        $category = $tournament->category;
-    
-        $birth_date = Carbon::createFromFormat('Y-m-d', $validated['birth_date']);
-        $categoryAge = $category->age;
-        $participantAge = $birth_date->diffInYears(Carbon::now());
-
-        if (($categoryAge != 80 and ($participantAge > $categoryAge or $participantAge < $categoryAge-3)) or ($categoryAge == 80 and $participantAge < 16)) {
-            return redirect()->back()->with('error', 'Участник не подходит по возрасту для данной возрастной категории турнира.');
-        }
-
-        $existingParticipant = Participant::where([
-            'fio' => $validated['fio'],
-            'birth_date' => $validated['birth_date'],
-            'gender' => $validated['gender'],
-            'tournament_id' => $validated['tournament_id']
-        ])->first();
-    
-        if ($existingParticipant) {
-            return redirect()->back()->with('error', 'Участник с такими данными уже зарегистрирован.');
-        }
-
-        $participant = new Participant();
-        $participant->tournament_id = $validated['tournament_id'];
-        $participant->fio = $validated['fio'];
-        $participant->birth_date = $validated['birth_date'];
-        $participant->gender = $validated['gender'];
-        $participant->phone = $validated['phone'];
-        $participant->save();
-    
-        return redirect()->route('tournaments.view', ['tournament_id' => $validated['tournament_id']])->with('success', 'Участник успешно зарегистрирован.');
-    }
-
     public function edit($tournament_id){
         $tournament = Tournament::findOrFail($tournament_id);
         $files = TournamentFile::where('tournament_id', $tournament_id)->get();
         return view('tournaments.edit',compact('tournament', 'files'));
     }
-
 
     public function update(Request $request, $tournament_id){
         $validated = $request->validate([
@@ -225,5 +171,70 @@ class TournamentController extends Controller
         $msg = 'Успешно добавлен турнир.';
 
         return redirect()->route('tournaments.view', ['tournament_id' => $tournament->id])->with('success', $msg);
+    }
+
+    public function create_registration($tournament_id) {
+        try {
+            $tournament = Tournament::findOrFail($tournament_id);
+            return view('tournaments.create_registration', compact('tournament'));
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+            return redirect()->back()->with('error', 'Tournament not found.');
+        }
+    }
+
+    public function store_registration(Request $request){
+
+        $validated = $request->validate([
+            'tournament_id' =>'required',
+            'fio' => 'required|min:4|max:255',
+            'birth_date' => 'required',
+            'gender'=>'required',
+            'phone' => ['required', 'regex:/^\+[1-9]\d{1,14}$/']
+        ]);
+    
+        $tournament = Tournament::findOrFail($validated['tournament_id']);
+        $category = $tournament->category;
+    
+        $birth_date = Carbon::createFromFormat('Y-m-d', $validated['birth_date']);
+        $categoryAge = $category->age;
+        $participantAge = $birth_date->diffInYears(Carbon::now());
+
+        if (($categoryAge != 80 and ($participantAge > $categoryAge or $participantAge < $categoryAge-3)) or ($categoryAge == 80 and $participantAge < 16)) {
+            return redirect()->back()->with('error', 'Участник не подходит по возрасту для данной возрастной категории турнира.');
+        }
+
+        $existingParticipant = Participant::where([
+            'fio' => $validated['fio'],
+            'birth_date' => $validated['birth_date'],
+            'gender' => $validated['gender'],
+            'tournament_id' => $validated['tournament_id']
+        ])->first();
+    
+        if ($existingParticipant) {
+            return redirect()->back()->with('error', 'Участник с такими данными уже зарегистрирован.');
+        }
+
+        $participant = new Participant();
+        $participant->tournament_id = $validated['tournament_id'];
+        $participant->fio = $validated['fio'];
+        $participant->birth_date = $validated['birth_date'];
+        $participant->gender = $validated['gender'];
+        $participant->phone = $validated['phone'];
+        $participant->save();
+    
+        return redirect()->route('tournaments.view', ['tournament_id' => $validated['tournament_id']])->with('success', 'Участник успешно зарегистрирован.');
+    }
+
+    
+    public function remove_participant($participant_id){
+        $participant = Participant::find($participant_id);
+        try {
+            $participant->update(['status' => 0]);
+            $participant->save();
+    
+            return redirect()->route('tournaments.view', ['tournament_id' => $participant->tournament_id])->with('success', 'Участник успешно снят.');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
+            return redirect()->back()->with('error', 'Participant not found.');
+        }
     }
 }
