@@ -104,6 +104,20 @@ class TournamentController extends Controller
             'deadline.before' => 'Дата окончания приема заявок должна быть раньше даты начала турнира.'
         ]);
 
+        $overlappingTournaments = Tournament::where('status', 1)
+            ->where(function($query) use ($validated) {
+                $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])
+                    ->orWhereBetween('end_date', [$validated['start_date'], $validated['end_date']])
+                    ->orWhere(function($query) use ($validated) {
+                        $query->where('start_date', '<', $validated['start_date'])
+                                ->where('end_date', '>', $validated['end_date']);
+                    });
+            })->exists();
+
+        if ($overlappingTournaments) {
+            return redirect()->back()->with('error','На выбранные даты уже запланирован другой турнир.');
+        }
+
         $tournament = Tournament::find($tournament_id);
     
         $tournament->name = $validated['name'];
@@ -166,6 +180,20 @@ class TournamentController extends Controller
             'end_date.after' => 'Дата окончания турнира должна быть позже даты начала.',
             'deadline.before' => 'Дата окончания приема заявок должна быть раньше даты начала турнира.'
         ]);
+
+        $overlappingTournaments = Tournament::where('status', 1)
+            ->where(function($query) use ($validated) {
+                $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])
+                    ->orWhereBetween('end_date', [$validated['start_date'], $validated['end_date']])
+                    ->orWhere(function($query) use ($validated) {
+                        $query->where('start_date', '<', $validated['start_date'])
+                                ->where('end_date', '>', $validated['end_date']);
+                    });
+            })->exists();
+
+        if ($overlappingTournaments) {
+            return redirect()->back()->with('error','На выбранные даты уже запланирован другой турнир.');
+        }
     
         $tournament = new Tournament();
         $tournament->name = $validated['name'];

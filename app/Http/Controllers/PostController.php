@@ -17,7 +17,7 @@ class PostController extends Controller
     }
 
     public function posts(){
-        $posts = Post::where('is_visible',1)->get();
+        $posts = Post::where('is_visible',1)->OrderByDesc('updated_at')->get();
         $hidden_posts = Post::where('is_visible',0)->get();
         $categories = Category::all();
 
@@ -26,7 +26,7 @@ class PostController extends Controller
 
     public function posts_by_category($category_id){
         $selected_category = Category::findOrFail($category_id);
-        $visible_posts = $selected_category->posts()->where('is_visible', 1)->get();
+        $visible_posts = $selected_category->posts()->where('is_visible', 1)->OrderByDesc('updated_at')->get();
         $hidden_posts = $selected_category->posts()->where('is_visible',0)->get();
         $categories = Category::all();
         return view('posts.by_category',compact('selected_category','visible_posts','categories','hidden_posts'));
