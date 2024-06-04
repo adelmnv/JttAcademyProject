@@ -50,7 +50,7 @@ class TournamentController extends Controller
             'deadline.before' => 'Дата окончания приема заявок должна быть раньше даты начала турнира.'
         ]);
 
-        $overlappingTournaments = Tournament::where('status', 1)
+        $overlappingTournaments = Tournament::where('status', 1)->where('id','!=',$tournament_id)
             ->where(function($query) use ($validated) {
                 $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])
                     ->orWhereBetween('end_date', [$validated['start_date'], $validated['end_date']])
