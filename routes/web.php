@@ -66,7 +66,8 @@ Route::post('/tournaments/{tournament_id?}/update/',[TournamentController::class
 Route::get('/tournaments/create/',[TournamentController::class,'create'])->name('tournaments.create')->middleware('auth');
 Route::post('/tournaments/create/',[TournamentController::class,'save'])->name('tournaments.save')->middleware('auth');
 Route::post('tournaments/remove/{participant_id}', [TournamentController::class,'remove_participant'])->name('tournaments.remove')->middleware('auth');
-
+Route::get('tournaments/edit/{participant_id}', [TournamentController::class,'edit_participant'])->name('tournaments.edit_participant')->middleware('auth');
+Route::post('tournaments/update/{participant_id}', [TournamentController::class,'update_participant'])->name('tournaments.update_participant')->middleware('auth');
 
 
 

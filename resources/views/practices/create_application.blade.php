@@ -34,13 +34,11 @@
                     @endforeach
                 </ul>
             @endif
+            @if (session('error'))
+                <div class="text-red-500 mt-6">
+                    {{ session('error') }}
+                </div>
+            @endif
         </div>
-
-        <!-- {{-- Если форма отправлена и заявка успешно создана --}}
-        @if (session('success'))
-            <div class="mt-8 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md">
-                {{ session('success') }}
-            </div>
-        @endif -->
     </div>
 @endsection

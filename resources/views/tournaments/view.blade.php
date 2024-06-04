@@ -104,7 +104,7 @@
                                     @else
                                         <td class="border border-gray-400 px-4 py-2">
                                             <div class="flex justify-evenly">
-                                                <a href="{{ route('tournaments', ['participant_id' => $participant->id]) }}" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition-all duration-300">Редактировать</a>
+                                                <a href="{{ route('tournaments.edit_participant', ['participant_id' => $participant->id]) }}" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition-all duration-300">Редактировать</a>
                                                 <a href="#" onclick="confirmDelete('{{ $participant->id }}', '{{ $participant->fio }}', '{{ $tournament->name }}')"  class="remove-player-link bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-all duration-300">Снять игрока</a>
                                             </div>
                                         </td>
@@ -125,6 +125,7 @@
                     <thead>
                         <tr>
                             <th class="border border-gray-400 px-4 py-2">#</th>
+                            <th class="border border-gray-400 px-4 py-2">Дата заявки</th>
                             <th class="border border-gray-400 px-4 py-2">ФИО</th>
                             <th class="border border-gray-400 px-4 py-2">Дата рождения</th>
                             @auth
@@ -147,9 +148,8 @@
                                     @else
                                         <td class="border border-gray-400 px-4 py-2">
                                             <div class="flex justify-evenly">
-                                                <a href="{{ route('tournaments', ['participant_id' => $participant->id]) }}" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition-all duration-300">Редактировать</a>
-                                                <a href="#" onclick="confirmDelete('{{ $participant->id }}', '{{ $participant->fio }}', '{{ $tournament->name }}')"  class="remove-player-link bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-all duration-300">Снять игрока</a>
-
+                                            <a href="{{ route('tournaments.edit_participant', ['participant_id' => $participant->id]) }}" class="bg-gray-500 text-white px-2 py-1 rounded hover:bg-gray-600 transition-all duration-300">Редактировать</a>
+                                            <a href="#" onclick="confirmDelete('{{ $participant->id }}', '{{ $participant->fio }}', '{{ $tournament->name }}')"  class="remove-player-link bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-all duration-300">Снять игрока</a>
                                         </td>
                                     @endif
                                 @endauth

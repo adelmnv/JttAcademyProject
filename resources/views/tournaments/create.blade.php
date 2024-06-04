@@ -65,7 +65,6 @@
                 </ul>
             </div>
         @endif
-
         @if (session('error'))
             <div class="text-red-500 mt-6">
                 {{ session('error') }}

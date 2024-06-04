@@ -15,9 +15,9 @@
                 <table class="table-auto border-collapse border border-gray-400 mx-auto w-3/5">
                     <thead>
                         <tr class="bg-gray-200">
-                            <th class="border border-gray-400 px-4 py-2">Дата начала</th>
-                            <th class="border border-gray-400 px-4 py-2">Название турнира</th>
-                            <th class="border border-gray-400 px-4 py-2">Дедлайн</th>
+                            <th class="border border-gray-400 px-4 py-2 w-1/5">Дата начала</th>
+                            <th class="border border-gray-400 px-4 py-2 w-3/5">Название турнира</th>
+                            <th class="border border-gray-400 px-4 py-2 w-1/5">Дедлайн</th>
                         </tr>
                     </thead>
                     <tbody>

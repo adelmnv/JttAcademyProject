@@ -173,6 +173,23 @@ class TournamentController extends Controller
         return redirect()->route('tournaments.view', ['tournament_id' => $tournament->id])->with('success', $msg);
     }
 
+    // public function age_validation($participant_birth_date, $tournament_id){
+
+    //     $tournament = Tournament::findOrFail($tournament_id);
+    //     $category = $tournament->category;
+    
+    //     $birth_date = Carbon::createFromFormat('Y-m-d', $participant_birth_date);
+    //     $categoryAge = $category->age;
+    //     $participantAge = $birth_date->diffInYears(Carbon::now());
+
+    //     if (($categoryAge != 80 and ($participantAge > $categoryAge or $participantAge < $categoryAge-3)) or ($categoryAge == 80 and $participantAge < 16)) {
+    //         return false;
+    //     }
+    //     else{
+    //         return true;
+    //     }
+    // }
+
     public function create_registration($tournament_id) {
         try {
             $tournament = Tournament::findOrFail($tournament_id);
@@ -236,5 +253,53 @@ class TournamentController extends Controller
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             return redirect()->back()->with('error', 'Participant not found.');
         }
+    }
+
+    public function edit_participant($participant_id){
+        $participant = Participant::find($participant_id);
+        return view('tournaments.edit_participant',compact('participant'));
+    }
+
+    public function update_participant(Request $request, $participant_id){
+
+        $validated = $request->validate([
+            'fio' => 'required|min:4|max:255',
+            'tournament_id' => 'required',
+            'birth_date' => 'required',
+            'gender'=>'required',
+            'phone' => ['required', 'regex:/^\+[1-9]\d{1,14}$/']
+        ]);
+
+        $tournament = Tournament::findOrFail($validated['tournament_id']);
+        $category = $tournament->category;
+    
+        $birth_date = Carbon::createFromFormat('Y-m-d', $validated['birth_date']);
+        $categoryAge = $category->age;
+        $participantAge = $birth_date->diffInYears(Carbon::now());
+
+        if (($categoryAge != 80 and ($participantAge > $categoryAge or $participantAge < $categoryAge-3)) or ($categoryAge == 80 and $participantAge < 16)) {
+            return redirect()->back()->with('error', 'Участник не подходит по возрасту для данной возрастной категории турнира.');
+        }
+
+        $existingParticipant = Participant::where([
+            'fio' => $validated['fio'],
+            'birth_date' => $validated['birth_date'],
+            'gender' => $validated['gender'],
+            'tournament_id' => $validated['tournament_id']
+        ])->first();
+    
+        if ($existingParticipant) {
+            return redirect()->back()->with('error', 'Участник с такими данными уже зарегистрирован.');
+        }
+
+        $participant = Participant::find($participant_id);
+        $participant->tournament_id = $validated['tournament_id'];
+        $participant->fio = $validated['fio'];
+        $participant->birth_date = $validated['birth_date'];
+        $participant->gender = $validated['gender'];
+        $participant->phone = $validated['phone'];
+        $participant->save();
+    
+        return redirect()->route('tournaments.view', ['tournament_id' => $validated['tournament_id']])->with('success', 'Изменения сохранены.');
     }
 }
