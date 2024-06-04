@@ -29,28 +29,48 @@
             <div class="py-4 text-2xl font-bold mb-4">{{ $type->name }}</div>
             <div class="flex flex-wrap">
                 @foreach ($type->practices as $practice)
-                    <div class="p-4 w-full border mb-4 rounded-lg shadow-md bg-white">
-                        <div class="flex items-center mb-4">
-                            <div class="text-2xl font-bold mr-4  text-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900">{{ $practice->type }}</div>
-                            <div class="text-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900">{{ $practice->description }}</div>
-                        </div>
-                        <div class="flex justify-between items-center bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-100 rounded p-4">
-                            <div>
-                                <p class="text-sm font-semibold mb-2">{{ $practice->payment_type }}</p>
-                                <p class="text-lg font-bold">{{ $practice->price }} тг</p>
+                    @if ($practice->is_visible == 1)
+                        <div class="p-4 w-full border mb-4 rounded-lg shadow-md bg-white">
+                            <div class="flex items-center mb-4">
+                                <div class="text-2xl font-bold mr-4  text-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900">{{ $practice->type }}</div>
+                                <div class="text-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900">{{ $practice->description }}</div>
                             </div>
-                            @guest
-                                <a href="{{ route('practices.create_application', ['practice_id' => $practice->id, 'type_id' => $type->id]) }}" class="bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900 text-white py-2 px-4 rounded-full hover:bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-600 transition-all duration-300">
-                                    Хочу играть!
-                                </a>
-                            @endguest
-                            @auth
-                            <a href="{{ route('practices.edit', ['practice_id' => $practice->id]) }}" class="bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900 text-white py-2 px-4 rounded-full hover:bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-600 transition-all duration-300">
-                                    Изменить
-                                </a>
-                            @endauth
+                            <div class="flex justify-between items-center bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-100 rounded p-4">
+                                <div>
+                                    <p class="text-sm font-semibold mb-2">{{ $practice->payment_type }}</p>
+                                    <p class="text-lg font-bold">{{ $practice->price }} тг</p>
+                                </div>
+                                @guest
+                                    <a href="{{ route('practices.create_application', ['practice_id' => $practice->id, 'type_id' => $type->id]) }}" class="bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900 text-white py-2 px-4 rounded-full hover:bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-600 transition-all duration-300">
+                                        Хочу играть!
+                                    </a>
+                                @endguest
+                                @auth
+                                <a href="{{ route('practices.edit', ['practice_id' => $practice->id]) }}" class="bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-900 text-white py-2 px-4 rounded-full hover:bg-{{ $loop->index % 2 == 0 ? 'purple' : 'blue' }}-600 transition-all duration-300">
+                                        Изменить
+                                    </a>
+                                @endauth
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        @auth
+                            <div class="p-4 w-full border mb-4 rounded-lg shadow-md bg-gray-200">
+                                <div class="flex items-center mb-4">
+                                    <div class="text-2xl font-bold mr-4  text-black-900">{{ $practice->type }}</div>
+                                    <div class="text-black-900">{{ $practice->description }}</div>
+                                </div>
+                                <div class="flex justify-between items-center bg-gray-100 rounded p-4">
+                                    <div>
+                                        <p class="text-sm font-semibold mb-2">{{ $practice->payment_type }}</p>
+                                        <p class="text-lg font-bold">{{ $practice->price }} тг</p>
+                                    </div>
+                                    <a href="{{ route('practices.edit', ['practice_id' => $practice->id]) }}" class="bg-gray-900 text-white py-2 px-4 rounded-full hover:bg-gray-600 transition-all duration-300">
+                                        Изменить
+                                    </a>
+                                </div>
+                            </div>
+                        @endauth
+                    @endif
                 @endforeach
             </div>
         @endforeach

@@ -52,30 +52,45 @@ class PlayerController extends Controller
     }
     
 
-    // public function create(){
-    //     $categories = Category::all();
-    //     return view('posts.create',compact('categories'));
-    // }
+    public function create(){
+        return view('players.create');
+    }
 
-    // public function store(Request $request){
-    //     $validated = $request->validate([
-    //         'title' => 'required|min:4|max:255',
-    //         'category_id' =>'required',
-    //         'description' => 'nullable',
-    //         'views'=> 'required|min:1|max:255',
-    //         'is_visible'=> 'required|min:0|max:1',
-    //         'main_photo_url'=> 'required|min:4|max:255'
-    //     ]);
-    //     $post = new Post();
-    //     $post->title = $validated['title'];
-    //     $post->category_id = $validated['category_id'];
-    //     $post->description = $validated['description'];
-    //     $post->views = $validated['views'];
-    //     $post->is_visible = $validated['is_visible'];
-    //     $post->main_photo_url = $validated['main_photo_url'];
-    //     $post->save();
+    public function save(Request $request){
+        $validated = $request->validate([
+            'fio' => 'required|min:3|max:255',
+            'date_of_birth'=> 'required|date|before:today',
+            'achievements' => 'required',
+            'is_visible'=> 'required|min:0|max:1',
+            'photo'=> 'required|image|mimes:jpeg,png,jpg,gif|max:2048', 
+        ]);
+        $player = new Player();
+        $player->fio = $validated['fio'];
+        $player->achievements = $validated['achievements'];
+        $player->date_of_birth = $validated['date_of_birth'];
+        $player->is_visible = $validated['is_visible'];
 
-    //     return redirect()->route('posts.edit', ['post_id'=>$post->id]);
-    //     //return back();
-    // }
+        if ($request->hasFile('photo')) {
+            try {
+                $imageName = uniqid() . '.' . $request->file('photo')->getClientOriginalExtension();
+                
+                $request->file('photo')->move(public_path('img'), $imageName);
+    
+                $player->main_photo_url = 'http://jttacademy_project.com/img/' . $imageName;
+
+                $player->save();
+
+                return redirect()->route('players');
+
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors(['photo' => 'Error saving the file: ' . $e->getMessage()]);
+            }
+        }
+        else{
+            return redirect()->back()->withErrors(['photo' => 'Image for player is required']);
+        }
+
+        
+        //return back();
+    }
 }

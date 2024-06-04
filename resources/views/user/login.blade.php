@@ -8,7 +8,7 @@
     </style>
 @endsection
 
-@section('page_title', 'Login')
+@section('page_title', 'Login - ')
 
 @section('content')
     <div class='container mx-auto bg-white'>

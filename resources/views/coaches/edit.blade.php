@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('page_title', 'Редактирование ')
+@section('page_title', 'Редактирование Тренера - ')
 
 @section('content')
     <div class="container mx-auto bg-white flex-grow flex items-center">
@@ -63,7 +63,7 @@
             const reader = new FileReader();
             
             reader.onload = function(e) {
-                document.getElementById('player-image').src = e.target.result;
+                document.getElementById('coach-image').src = e.target.result;
             };
             
             reader.readAsDataURL(file);

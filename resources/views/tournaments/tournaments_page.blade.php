@@ -22,14 +22,30 @@
                     </thead>
                     <tbody>
                         @foreach($tournaments as $tournament)
-                            <tr>
-                                <td class="border border-gray-400 px-4 py-2">{{ strftime("%d.%m.%Y", strtotime($tournament->start_date)) }}</td>
-                                <td class="border border-gray-400 px-4 py-2">
-                                    <a href="{{ route('tournaments.view', ['tournament_id' => $tournament->id]) }}" class="hover:text-green-500 hover:font-semibold">{{ $tournament->name }}</a> 
-                                    ({{ $tournament->category->name }})
-                                </td>
-                                <td class="border border-gray-400 px-4 py-2 {{ strtotime($tournament->deadline) < time() ? 'text-red-500' : '' }}">{{ strftime("%d.%m.%Y", strtotime($tournament->deadline)) }}</td>
-                            </tr>
+                            @if ($tournament->status == 1)
+                                <tr>
+                                    <td class="border border-gray-400 px-4 py-2">{{ strftime("%d.%m.%Y", strtotime($tournament->start_date)) }}</td>
+                                    <td class="border border-gray-400 px-4 py-2">
+                                        <a href="{{ route('tournaments.view', ['tournament_id' => $tournament->id]) }}" class="hover:text-green-500 hover:font-semibold">{{ $tournament->name }}</a> 
+                                        ({{ $tournament->category->name }})
+                                    </td>
+                                    <td class="border border-gray-400 px-4 py-2 {{ strtotime($tournament->deadline) < time() ? 'text-red-500' : '' }}">{{ strftime("%d.%m.%Y", strtotime($tournament->deadline)) }}</td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td class="border border-gray-400 px-4 py-2 text-gray-500">{{ strftime("%d.%m.%Y", strtotime($tournament->start_date)) }}</td>
+                                    @guest 
+                                        <td class="border border-gray-400 px-4 py-2 text-gray-500"> {{ $tournament->name }} ({{ $tournament->category->name }}) <b>Отменен</b></td>
+                                    @endguest
+                                    @auth
+                                        <td class="border border-gray-400 px-4 py-2 text-gray-500">
+                                            <a href="{{ route('tournaments.view', ['tournament_id' => $tournament->id]) }}" class="hover:text-orange-500 hover:font-semibold">{{ $tournament->name }}</a> 
+                                            ({{ $tournament->category->name }}) <b>Отменен</b>
+                                        </td>
+                                    @endauth
+                                    <td class="border border-gray-400 px-4 py-2 text-gray-500 {{ strtotime($tournament->deadline) < time() ? 'text-red-500' : '' }}">{{ strftime("%d.%m.%Y", strtotime($tournament->deadline)) }}</td>
+                                </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

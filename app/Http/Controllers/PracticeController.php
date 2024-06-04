@@ -12,10 +12,12 @@ class PracticeController extends Controller
     // }
 
     public function practices(){
-        $practices = Practice::all();
+        //$practices = Practice::where('is_visible',1)->get();
+        //$hidden_practices = Practice::where('is_visible',0)->get();
         $types = Type::all();
+        return view('practices.practices_page',compact('types'));
 
-        return view('practices.practices_page',compact('practices','types'));
+        //return view('practices.practices_page',compact('practices','types','hidden_practices'));
     }
 
     public function practices_by_type($type_id){
@@ -78,5 +80,32 @@ class PracticeController extends Controller
         $practice->save();
     
         return redirect()->route('practices')->with('success', 'Тренировка обновлена успешно.');
+    }
+
+    public function create(){
+        $types = Type::all();
+        return view('practices.create',compact('types'));
+    }
+
+    public function save(Request $request){
+        $validated = $request->validate([
+            'type_id' =>'required',
+            'type' => 'required|min:4|max:255',
+            'payment_type'=> 'required|min:4|max:255', 
+            'description' => 'required',
+            'price'=>'required|integer',
+            'is_visible'=> 'required|min:0|max:1'
+        ]);
+        $practice = new Practice();
+        $practice->type_id = $validated['type_id'];
+        $practice->type = $validated['type'];
+        $practice->payment_type = $validated['payment_type'];
+        $practice->description = $validated['description'];
+        $practice->price = $validated['price'];
+        $practice->is_visible = $validated['is_visible'];
+
+        $practice->save();
+
+        return redirect()->route('practices');
     }
 }

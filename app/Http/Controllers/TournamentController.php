@@ -93,7 +93,7 @@ class TournamentController extends Controller
     public function update(Request $request, $tournament_id){
         $validated = $request->validate([
             'name' => 'required|min:4|max:255',
-            'start_date' => 'required|date',
+            'start_date' => 'required|date|after:today',
             'end_date' => 'required|date|after:start_date',
             'deadline' => 'required|date|before:start_date',
             'status' => 'required|numeric|min:0|max:1',
@@ -146,5 +146,56 @@ class TournamentController extends Controller
         }
     
         return redirect()->route('tournaments.view', ['tournament_id' => $tournament_id])->with('success', $msg);
+    }
+
+    public function create(){
+        $categories = TournamentCategory::all();
+        return view('tournaments.create',compact('categories'));
+    }
+
+    public function save(Request $request){
+        $validated = $request->validate([
+            'name' => 'required|min:4|max:255',
+            'tournament_category_id' => 'required|numeric',
+            'start_date' => 'required|date|after:today',
+            'end_date' => 'required|date|after:start_date',
+            'deadline' => 'required|date|before:start_date',
+            'status' => 'required|numeric|min:0|max:1',
+            'files.*' => 'nullable|file|max:10240'
+        ], [
+            'end_date.after' => 'Дата окончания турнира должна быть позже даты начала.',
+            'deadline.before' => 'Дата окончания приема заявок должна быть раньше даты начала турнира.'
+        ]);
+    
+        $tournament = new Tournament();
+        $tournament->name = $validated['name'];
+        $tournament->tournament_category_id = $validated['tournament_category_id'];
+        $tournament->start_date = $validated['start_date'];
+        $tournament->end_date = $validated['end_date'];
+        $tournament->deadline = $validated['deadline'];
+        $tournament->status = $validated['status'];
+    
+        $tournament->save();
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $fileModel = new TournamentFile();
+
+                $fileName = $file->getClientOriginalName();
+                $file->move(public_path('files'), $fileName);
+
+                $fileModel->tournament_id = $tournament->id;
+                $fileModel->file_name = $fileName;
+
+                $fileModel->file_path = 'http://jttacademy_project.com/files/' . $fileName;
+
+    
+                $fileModel->save();
+            }
+        }
+
+        $msg = 'Успешно добавлен турнир.';
+
+        return redirect()->route('tournaments.view', ['tournament_id' => $tournament->id])->with('success', $msg);
     }
 }

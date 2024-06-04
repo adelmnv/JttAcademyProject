@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('page_title', 'Редактирование - ')
+@section('page_title', 'Редактирование Турнира - ')
 
 @section('content')
 <div class="container mx-auto bg-white p-4">

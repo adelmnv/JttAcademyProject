@@ -1,32 +1,28 @@
 @extends('app')
 
-@section('page_title', 'Создание Поста - ')
+@section('page_title', 'Создание Игрока - ')
 
 @section('content')
     <div class="container mx-auto bg-white flex-grow flex items-center">
         <div class="container flex justify-between items-start">
             <div class="w-2/5">
-                <img id="post-image" src="{{ asset('img/nophoto.png') }}" alt="" class="m-4 rounded-lg w-full h-auto p-2">
+                <img id="player-image" src="{{ asset('img/nophoto.png') }}" alt="" class="m-4 rounded-lg w-full h-auto p-2">
             </div>
             <div class="w-3/5 p-8">
-                <h2 class="text-lg font-bold mb-2">Новый Пост</h2>
-                <form method="post" action="{{ route('posts.save') }}" class="mb-4" enctype="multipart/form-data">
+                <h2 class="text-lg font-bold mb-2">Новый Игрока</h2>
+                <form method="post" action="{{ route('players.save') }}" class="mb-4" enctype="multipart/form-data">
                     @csrf
                     <div class="flex flex-col mb-2">
-                        <label for="title" class="font-bold">Заголовок:</label>
-                        <input type="text" id="title" name="title" class="border rounded-md py-2 px-4" />
+                        <label for="fio" class="font-bold">Полное имя:</label>
+                        <input type="text" id="fio" name="fio" class="border rounded-md py-2 px-4" />
                     </div>
                     <div class="flex flex-col mb-2">
-                        <label for="category_id" class="font-bold">Категория:</label>
-                        <select id="category_id" name="category_id" class="border rounded-md py-2 px-4" required>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
+                        <label for="date_of_birth" class="font-bold">Дата рождения:</label>
+                        <input type="date" id="date_of_birth" name="date_of_birth" class="border rounded-md py-2 px-4" />
                     </div>
                     <div class="flex flex-col mb-2">
-                        <label for="description" class="font-bold">Текст:</label>
-                        <textarea id="description" name="description" class="border rounded-md py-2 px-4 resize-y" rows="10"></textarea>
+                        <label for="achievements" class="font-bold">Достижения:</label>
+                        <textarea id="achievements" name="achievements" class="border rounded-md py-2 px-4 resize-y" rows="6"></textarea>
                     </div>
                     <div class="flex flex-col mb-2">
                         <label for="photo" class="font-bold">Фото:</label>
@@ -40,8 +36,8 @@
                         </select>
                     </div>
                     <div class="mt-6">
-                        <input type="submit" name="post_save" value="Сохранить" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-all duration-300 cursor-pointer">
-                        <a href="{{ route('posts') }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 cursor-pointer">Отменить</a>
+                        <input type="submit" name="player_save" value="Сохранить" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-all duration-300 cursor-pointer">
+                        <a href="{{ route('players') }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 cursor-pointer">Отменить</a>
                     </div>
                 </form>
                 @if ($errors->any())
@@ -63,7 +59,7 @@
             const reader = new FileReader();
             
             reader.onload = function(e) {
-                document.getElementById('post-image').src = e.target.result;
+                document.getElementById('player-image').src = e.target.result;
             };
             
             reader.readAsDataURL(file);

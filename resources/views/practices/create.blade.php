@@ -1,18 +1,18 @@
 @extends('app')
 
-@section('page_title', 'Редактирование Тренировки - ')
+@section('page_title', 'Создание Тренировки - ')
 
 @section('content')
 <div class="container mx-auto bg-white p-4">
     <div class="w-3/4 mx-auto bg-white p-8">
-        <h1 class="text-2xl font-bold mb-4">Редактировать тренировку</h1>
-        <form action="{{ route('practices.update', ['practice_id'=>$practice->id]) }}" method="POST">
+        <h1 class="text-2xl font-bold mb-4">Новая тренировка</h1>
+        <form action="{{ route('practices.save') }}" method="POST">
             @csrf
             <div class="mb-4">
                 <label for="type_id" class="block text-gray-700">Тип</label>
                 <select name="type_id" id="type_id" class="form-select mt-1 block w-full border rounded-md py-2 px-4">
                     @foreach ($types as $type)
-                        <option value="{{ $type->id }}" {{ $practice->type_id == $type->id ? 'selected' : '' }}>
+                        <option value="{{ $type->id }}">
                             {{ $type->name }}
                         </option>
                     @endforeach
@@ -21,29 +21,29 @@
 
             <div class="mb-4">
                 <label for="type" class="block text-gray-700">Вид тренировки</label>
-                <input type="text" name="type" id="type" value="{{ old('type', $practice->type) }}" class="form-input mt-1 block w-full border rounded-md py-2 px-4">
+                <input type="text" name="type" id="type" class="form-input mt-1 block w-full border rounded-md py-2 px-4">
             </div>
 
             <div class="mb-4">
                 <label for="payment_type" class="block text-gray-700">Тип оплаты</label>
-                <input type="text" name="payment_type" id="payment_type" value="{{ old('payment_type', $practice->payment_type) }}" class="form-input mt-1 block w-full border rounded-md py-2 px-4">
+                <input type="text" name="payment_type" id="payment_type" class="form-input mt-1 block w-full border rounded-md py-2 px-4">
             </div>
 
             <div class="mb-4">
                 <label for="description" class="block text-gray-700">Описание</label>
-                <textarea name="description" id="description" class="form-textarea mt-1 block w-full py-2 px-4 border rounded-md" rows="8">{{ old('description', $practice->description) }}</textarea>
+                <textarea name="description" id="description" class="form-textarea mt-1 block w-full py-2 px-4 border rounded-md" rows="8"></textarea>
             </div>
 
             <div class="mb-4">
                 <label for="price" class="block text-gray-700">Цена</label>
-                <input type="text" name="price" id="price" value="{{ old('price', $practice->price) }}" class="form-input mt-1 block w-full border rounded-md py-2 px-4">
+                <input type="text" name="price" id="price" class="form-input mt-1 block w-full border rounded-md py-2 px-4">
             </div>
 
             <div class="mb-4">
                 <label for="is_visible" class="block text-gray-700">Видимость</label>
                 <select name="is_visible" id="is_visible" class="form-select mt-1 block w-full border rounded-md py-2 px-4">
-                    <option value="1" {{ $practice->is_visible ? 'selected' : '' }}>Видимый</option>
-                    <option value="0" {{ !$practice->is_visible ? 'selected' : '' }}>Скрытый</option>
+                    <option value="1">Видимый</option>
+                    <option value="0">Скрытый</option>
                 </select>
             </div>
 
