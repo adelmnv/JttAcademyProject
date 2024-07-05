@@ -7,17 +7,9 @@ use App\Models\{Type,Practice,Tag, Application};
 
 class PracticeController extends Controller
 {
-    // public function index(){
-
-    // }
-
     public function practices(){
-        //$practices = Practice::where('is_visible',1)->get();
-        //$hidden_practices = Practice::where('is_visible',0)->get();
         $types = Type::all();
         return view('practices.practices_page',compact('types'));
-
-        //return view('practices.practices_page',compact('practices','types','hidden_practices'));
     }
 
     public function practices_by_type($type_id){

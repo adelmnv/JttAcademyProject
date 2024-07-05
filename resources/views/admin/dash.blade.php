@@ -139,11 +139,11 @@
                     @csrf
                     @method('POST')
                     <input type="hidden" name="id" id="appId">
-                    <div id="processType" style="display: none;">
+                    <div id="processType" class="mb-2" style="display: none;">
                         <input type="radio" id="success" name="processType" value="success">
                         <label for="success">Успешно обработана</label><br>
                         <input type="radio" id="declined" name="processType" value="declined">
-                        <label for="declined">Отказано в обработке</label><br>
+                        <label for="declined">Отказ от услуг</label><br>
                     </div>
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Подтвердить изменение
@@ -206,10 +206,8 @@
             processType.style.display = 'none';
         }
 
-        // Устанавливаем ID заявки в скрытом поле
         document.getElementById('appId').value = id;
 
-        // Отображаем модальное окно
         modal.classList.remove('hidden');
     }
 </script>

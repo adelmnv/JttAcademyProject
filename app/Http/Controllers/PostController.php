@@ -7,10 +7,6 @@ use App\Models\{Post,Category};
 
 class PostController extends Controller
 {
-    // public function index(){
-
-    // }
-
     public function view($post_id){
         $post = Post::findOrFail($post_id);
         return view('posts.view',compact('post'));
@@ -111,7 +107,5 @@ class PostController extends Controller
             return redirect()->back()->withErrors(['photo' => 'Image for post is required']);
         }
 
-        
-        //return back();
     }
 }

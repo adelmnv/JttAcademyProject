@@ -173,23 +173,6 @@ class TournamentController extends Controller
         return redirect()->route('tournaments.view', ['tournament_id' => $tournament->id])->with('success', $msg);
     }
 
-    // public function age_validation($participant_birth_date, $tournament_id){
-
-    //     $tournament = Tournament::findOrFail($tournament_id);
-    //     $category = $tournament->category;
-    
-    //     $birth_date = Carbon::createFromFormat('Y-m-d', $participant_birth_date);
-    //     $categoryAge = $category->age;
-    //     $participantAge = $birth_date->diffInYears(Carbon::now());
-
-    //     if (($categoryAge != 80 and ($participantAge > $categoryAge or $participantAge < $categoryAge-3)) or ($categoryAge == 80 and $participantAge < 16)) {
-    //         return false;
-    //     }
-    //     else{
-    //         return true;
-    //     }
-    // }
-
     public function create_registration($tournament_id) {
         try {
             $tournament = Tournament::findOrFail($tournament_id);

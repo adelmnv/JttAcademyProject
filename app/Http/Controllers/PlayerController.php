@@ -89,8 +89,5 @@ class PlayerController extends Controller
         else{
             return redirect()->back()->withErrors(['photo' => 'Image for player is required']);
         }
-
-        
-        //return back();
     }
 }
