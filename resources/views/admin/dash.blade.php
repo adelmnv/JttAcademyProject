@@ -92,7 +92,7 @@
                                 <td class="border border-gray-400 px-4 py-2">{{$app->name}}</td>
                                 <td class="border border-gray-400 px-4 py-2"><a href="https://wa.me/{{$app->phone}}" target="_blank" style="text-decoration: underline; ">{{$app->phone}}</a></td>
                                 <td class="border border-gray-400 px-4 py-2">{{$app->practice->type}}</td>
-                                <td class="border border-gray-400 px-4 py-2 text-center">@if($app->status == 3) отказ от услуг @else успешно обработана @endif</td>
+                                <td class="border border-gray-400 px-4 py-2 text-center">@if($app->status == 3) отказ от услуг @else успешная обработка @endif</td>
                             </tr> 
                         @endforeach
                     </tbody>
