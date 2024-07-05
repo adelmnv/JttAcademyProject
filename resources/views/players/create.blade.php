@@ -9,7 +9,7 @@
                 <img id="player-image" src="{{ asset('img/nophoto.png') }}" alt="" class="m-4 rounded-lg w-full h-auto p-2">
             </div>
             <div class="w-3/5 p-8">
-                <h2 class="text-lg font-bold mb-2">Новый Игрока</h2>
+                <h2 class="text-lg font-bold mb-2">Новый Игрок</h2>
                 <form method="post" action="{{ route('players.save') }}" class="mb-4" enctype="multipart/form-data">
                     @csrf
                     <div class="flex flex-col mb-2">

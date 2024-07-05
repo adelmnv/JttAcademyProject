@@ -46,11 +46,4 @@ class HomeController extends Controller
 
     }
 
-    public function admin_dash(){
-        $posts = Post::all();
-        return view('user.dash',compact('posts'));
-    }
-
-    
-
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\{HomeController, PostController, CoachController, PlayerController, PracticeController, TournamentController};
+use App\Http\Controllers\{HomeController, PostController, CoachController, PlayerController, PracticeController, TournamentController, AdminController};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,7 +24,6 @@ Route::get('/about',[HomeController::class,'about'])->name('about');
 Route::get('/login' ,[HomeController::class,'user_login'])->name('user.login');
 Route::post('/login' ,[HomeController::class,'user_auth'])->name('user.auth');
 Route::get('/logout' ,[HomeController::class,'user_logout'])->name('user.logout');
-Route::get('/dash',[HomeController::class,'admin_dash'])->name('user.dash')->middleware('auth');
 
 Route::get('/posts',[PostController::class,'posts'])->name('posts');
 Route::get('/posts/{post_id?}/view/',[PostController::class,'view'])->name('posts.view')->where('post_id','[0-9]+');
@@ -69,6 +68,5 @@ Route::post('tournaments/remove/{participant_id}', [TournamentController::class,
 Route::get('tournaments/edit/{participant_id}', [TournamentController::class,'edit_participant'])->name('tournaments.edit_participant')->middleware('auth');
 Route::post('tournaments/update/{participant_id}', [TournamentController::class,'update_participant'])->name('tournaments.update_participant')->middleware('auth');
 
-
-
-
+Route::get('/dash',[AdminController::class,'admin_dash'])->name('admin.dash')->middleware('auth');
+Route::post('/applications/edit/{application_id}',[AdminController::class,'application_edit_status'])->name('admin.application_edit_status')->middleware('auth');

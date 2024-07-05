@@ -2,29 +2,6 @@
 
 @section('page_title', 'Главная - ')
 
-@section('styles')
-<style>
-    /* h1{
-        color:red;
-    } */
-
-    .welcome_header{
-        padding:20px;
-    }
-
-    //tailwind method
-    //именование классов исходя как этот элемент должен выглядить
-    .text-lg{
-        font-size: 42px;
-    }
-
-    .text-black{
-        color: black;
-    }
-
-</style>
-@endsection
-
 @section('content')
 <div class="container mx-auto bg-white flex-grow flex items-center">
     <div class="container flex justify-between items-center">

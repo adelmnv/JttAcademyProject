@@ -9,6 +9,8 @@ class Application extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'practice_id','phone','status'];
+
     public function practice(){
         return $this->belongsTo(Practice::class);
     }
