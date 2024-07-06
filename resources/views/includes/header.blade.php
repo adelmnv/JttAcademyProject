@@ -11,7 +11,7 @@
         <a href="{{ route('players') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Наши игроки</a>
         <a href="{{ route('posts') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Наш блог</a>
         @auth
-            <a href="{{ route('admin.dash') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Панель</a>
+            <a href="{{ route('admin.applications') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Панель</a>
             <a href="{{route ('user.logout') }}" class="menu-item text-lg text-white hover:text-green-500 font-semibold">Выйти</a>
         @endauth
     </nav>

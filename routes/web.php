@@ -68,5 +68,26 @@ Route::post('tournaments/remove/{participant_id}', [TournamentController::class,
 Route::get('tournaments/edit/{participant_id}', [TournamentController::class,'edit_participant'])->name('tournaments.edit_participant')->middleware('auth');
 Route::post('tournaments/update/{participant_id}', [TournamentController::class,'update_participant'])->name('tournaments.update_participant')->middleware('auth');
 
-Route::get('/dash',[AdminController::class,'admin_dash'])->name('admin.dash')->middleware('auth');
-Route::post('/applications/edit/{application_id}',[AdminController::class,'application_edit_status'])->name('admin.application_edit_status')->middleware('auth');
+//Route::get('/dash',[AdminController::class,'admin_dash'])->name('admin.dash')->middleware('auth');
+Route::get('/dash/applications',[AdminController::class,'applications'])->name('admin.applications')->middleware('auth');
+Route::post('/dash/applications/edit/{id}', [AdminController::class, 'application_edit_status'])->name('admin.application_edit_status')->middleware('auth');
+Route::get('/dash/schedule',[AdminController::class,'schedule'])->name('admin.schedule')->middleware('auth');
+Route::get('/dash/menu',[AdminController::class,'menu'])->name('admin.menu')->middleware('auth');
+Route::get('/dash/memberships',[AdminController::class,'memberships'])->name('admin.memberships')->middleware('auth');
+Route::get('/dash/memberships/{membership_id?}/view', [AdminController::class, 'memberships_view'])->name('admin.memberships_view')->middleware('auth');
+Route::get('/dash/memberships/{membership_id?}/edit/',[AdminController::class,'memberships_edit'])->name('admin.memberships_edit')->middleware('auth');
+Route::post('/dash/memberships/{membership_id?}/update/',[AdminController::class,'memberships_update'])->name('admin.memberships_update')->middleware('auth');
+Route::get('/dash/memberships/create/{id?}',[AdminController::class,'memberships_create'])->name('admin.memberships_create')->middleware('auth');
+Route::post('/dash/memberships/create/',[AdminController::class,'memberships_save'])->name('admin.memberships_save')->middleware('auth');
+
+Route::get('/dash/individuals/{id?}/view', [AdminController::class, 'individuals_view'])->name('admin.individuals_view')->middleware('auth');
+Route::get('/dash/individuals/{id?}/edit/',[AdminController::class,'individuals_edit'])->name('admin.individuals_edit')->middleware('auth');
+Route::post('/dash/individuals/{id?}/update/',[AdminController::class,'individuals_update'])->name('admin.individuals_update')->middleware('auth');
+Route::get('/dash/individuals/create/{id?}',[AdminController::class,'individuals_create'])->name('admin.individuals_create')->middleware('auth');
+Route::post('/dash/individuals/create/',[AdminController::class,'individuals_save'])->name('admin.individuals_save')->middleware('auth');
+
+Route::get('/dash/rent/{id?}/view', [AdminController::class, 'rent_view'])->name('admin.rent_view')->middleware('auth');
+Route::get('/dash/rent/{id?}/edit/',[AdminController::class,'rent_edit'])->name('admin.rent_edit')->middleware('auth');
+Route::post('/dash/rent/{id?}/update/',[AdminController::class,'rent_update'])->name('admin.rent_update')->middleware('auth');
+Route::get('/dash/rent/create/{id?}',[AdminController::class,'rent_create'])->name('admin.rent_create')->middleware('auth');
+Route::post('/dash/rent/create/',[AdminController::class,'rent_save'])->name('admin.rent_save')->middleware('auth');

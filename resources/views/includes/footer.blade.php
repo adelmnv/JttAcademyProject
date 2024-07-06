@@ -31,7 +31,7 @@
                 @endguest
                 @auth
                     <li>
-                        <a href="{{ route('admin.dash') }}" class="hover:text-green-500 me-4 md:me-6">Панель</a>
+                        <a href="{{ route('admin.applications') }}" class="hover:text-green-500 me-4 md:me-6">Панель</a>
                     </li>
                     <li>
                         <a href="{{route ('user.logout') }}" class="hover:text-green-500 me-4 md:me-6">Выйти</a>

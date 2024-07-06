@@ -10,6 +10,6 @@ class Practice extends Model
     use HasFactory;
 
     public function type(){
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class, 'type_id');
     }
 }
