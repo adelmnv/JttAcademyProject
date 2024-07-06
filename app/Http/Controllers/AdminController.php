@@ -114,6 +114,8 @@ class AdminController extends Controller
 
         if ($id !== null) {
             $application = Application::find($id);
+            $application->status = 4;
+            $application->save();
         }
 
         $groups = GroupPractice::whereHas('memberships', function ($query) {
