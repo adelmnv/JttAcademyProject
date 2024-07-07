@@ -15,6 +15,11 @@
                 <span>Абонементы</span>
             </a>
         </div>
+        <div class="rounded-full py-2 px-6 border text-sm transition-all duration-300 hover:bg-green-500 hover:text-white mr-4 mb-4 inline-flex items-center bg-white text-black">
+            <a href="{{ route('admin.schedule') }}">
+                <span>Расписание</span>
+            </a>
+        </div>
         <div class="rounded-full py-2 px-6 border text-sm bg-white text-black inline-flex items-center mr-4 mb-4">
             <span class="ml-2 font-bold">Меню по созданию</span>
         </div>

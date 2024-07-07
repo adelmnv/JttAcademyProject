@@ -16,6 +16,11 @@
             </a>
         </div>
         <div class="rounded-full py-2 px-6 border text-sm transition-all duration-300 hover:bg-green-500 hover:text-white mr-4 mb-4 inline-flex items-center bg-white text-black">
+            <a href="{{ route('admin.schedule') }}">
+                <span>Расписание</span>
+            </a>
+        </div>
+        <div class="rounded-full py-2 px-6 border text-sm transition-all duration-300 hover:bg-green-500 hover:text-white mr-4 mb-4 inline-flex items-center bg-white text-black">
             <a href="{{ route('admin.menu') }}">
                 <span>Меню по созданию</span>
             </a>
@@ -33,9 +38,9 @@
                 </div>
                 <div class="mb-4">
                     <h2 class="text-xl font-bold mb-2">Информация о группе</h2>
-                    <p><strong>Группа:</strong> {{ $membership->group->practice->type }}</p>
+                    <p><strong>Группа:</strong><a href=""></a> {{ $membership->group->practice->type }}</p>
                     <p><strong>Возрастная категория:</strong> {{ $membership->practice_type_name }}</p>
-                    <p><strong>Тренер:</strong> {{ $membership->group->coach->fio }}</p>
+                    <p><strong>Тренер:</strong> <a href="{{ route('coaches.view', ['coach_id' => $coach->id]) }}" class="text-green-600 hover:text-green-800 transition-colors duration-300">{{ $group->coach->fio }}</a></p>
                     <p><strong>Дни тренировок:</strong> {{ $membership->group->days_as_names }}</p>
                     <p><strong>Время начало тренировок:</strong> {{ $membership->group->time }} - {{$membership->group->duration}} ч.</p>
                     <p><strong>Стоимость:</strong> {{ $membership->group->practice->price }} тг</p>

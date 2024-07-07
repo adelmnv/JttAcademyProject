@@ -72,6 +72,7 @@ Route::post('tournaments/update/{participant_id}', [TournamentController::class,
 Route::get('/dash/applications',[AdminController::class,'applications'])->name('admin.applications')->middleware('auth');
 Route::post('/dash/applications/edit/{id}', [AdminController::class, 'application_edit_status'])->name('admin.application_edit_status')->middleware('auth');
 Route::get('/dash/schedule',[AdminController::class,'schedule'])->name('admin.schedule')->middleware('auth');
+Route::get('/admin/schedule/{date}', [AdminController::class, 'dailySchedule'])->name('admin.daily_schedule');
 Route::get('/dash/menu',[AdminController::class,'menu'])->name('admin.menu')->middleware('auth');
 
 Route::get('/dash/memberships',[MembershipController::class,'memberships'])->name('memberships')->middleware('auth');

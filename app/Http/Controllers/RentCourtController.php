@@ -84,10 +84,9 @@ class RentCourtController extends Controller
         //Проверка на то что в это время идет турнир
         //...........
 
-        $rent = new IndividualPractice();
+        $rent = new RentCourt();
         $rent->name = $validated['name'];
         $rent->phone = $validated['phone'];
-        $rent->coach_id = $validated['coach_id'];
         $rent->date = $validated['date'];
         $rent->time = $validated['time'];
         $rent->duration = $validated['duration'];
