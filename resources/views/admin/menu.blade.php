@@ -11,7 +11,7 @@
             </a>
         </div>
         <div class="rounded-full py-2 px-6 border text-sm transition-all duration-300 hover:bg-green-500 hover:text-white mr-4 mb-4 inline-flex items-center bg-white text-black">
-            <a href="{{ route('admin.memberships') }}">
+            <a href="{{ route('memberships') }}">
                 <span>Абонементы</span>
             </a>
         </div>
@@ -46,9 +46,24 @@
                 <h5 class="text-xl font-bold">Создать нового тренера</h5>
             </div>
         </a>
-        <a href="{{ route('admin.memberships_create') }}" class="group">
+        <a href="{{ route('group_practices.create') }}" class="group">
+            <div class="bg-gray-200 p-20 rounded-lg text-center transition duration-300 ease-in-out transform hover:shadow-lg hover:border-2 hover:border-gray-300" style="background-color: #f5f5f4;">
+                <h5 class="text-xl font-bold">Создать новую группу</h5>
+            </div>
+        </a>
+        <a href="{{ route('memberships.create') }}" class="group">
             <div class="bg-gray-200 p-20 rounded-lg text-center transition duration-300 ease-in-out transform hover:shadow-lg hover:border-2 hover:border-gray-300" style="background-color: #f5f5f4;">
                 <h5 class="text-xl font-bold">Создать новой абонемент</h5>
+            </div>
+        </a>
+        <a href="{{ route('individual_practices.create') }}" class="group">
+            <div class="bg-gray-200 p-20 rounded-lg text-center transition duration-300 ease-in-out transform hover:shadow-lg hover:border-2 hover:border-gray-300" style="background-color: #f5f5f4;">
+                <h5 class="text-xl font-bold">Создать запись на индивидуалку</h5>
+            </div>
+        </a>
+        <a href="{{ route('rent_courts.create') }}" class="group">
+            <div class="bg-gray-200 p-20 rounded-lg text-center transition duration-300 ease-in-out transform hover:shadow-lg hover:border-2 hover:border-gray-300" style="background-color: #f5f5f4;">
+                <h5 class="text-xl font-bold">Создать запись на аренду</h5>
             </div>
         </a>
         

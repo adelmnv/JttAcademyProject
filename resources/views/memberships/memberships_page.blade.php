@@ -45,7 +45,7 @@
                                 <td class="border border-gray-400 px-4 py-2">{{$membership->name}}</td>
                                 <td class="border border-gray-400 px-4 py-2"><a href="https://wa.me/{{$membership->phone}}" target="_blank" style="text-decoration: underline; color: #65a30d;">{{$membership->phone}}</a></td>
                                 <td class="border border-gray-400 px-4 py-2">{{$membership->group->practice->type}} {{$membership->practice_type_name}}</td>
-                                <td class="border border-gray-400 px-4 py-2 text-center"><a href="{{ route('admin.memberships_view', ['membership_id' => $membership->id]) }}" class="change-status-link text-black px-2 py-1 rounded transition-all duration-300 bg-gray-200 duration-300 ease-in-out transform hover:bg-gray-300">Подробнее</a></td>
+                                <td class="border border-gray-400 px-4 py-2 text-center"><a href="{{ route('memberships.view', ['membership_id' => $membership->id]) }}" class="change-status-link text-black px-2 py-1 rounded transition-all duration-300 bg-gray-200 duration-300 ease-in-out transform hover:bg-gray-300">Подробнее</a></td>
                             </tr> 
                         @endforeach
                     </tbody>
@@ -75,7 +75,7 @@
                                 <td class="border border-gray-400 px-4 py-2">{{$membership->name}}</td>
                                 <td class="border border-gray-400 px-4 py-2"><a href="https://wa.me/{{$membership->phone}}" target="_blank" style="text-decoration: underline;">{{$membership->phone}}</a></td>
                                 <td class="border border-gray-400 px-4 py-2">{{$membership->group->practice->type}} {{$membership->practice_type_name}}</td>
-                                <td class="border border-gray-400 px-4 py-2 text-center"><a href="{{ route('admin.memberships_view', ['membership_id' => $membership->id]) }}" class="change-status-link text-black px-2 py-1 rounded transition-all duration-300 bg-gray-200 duration-300 ease-in-out transform hover:bg-gray-300">Подробнее</a></td>
+                                <td class="border border-gray-400 px-4 py-2 text-center"><a href="{{ route('memberships.view', ['membership_id' => $membership->id]) }}" class="change-status-link text-black px-2 py-1 rounded transition-all duration-300 bg-gray-200 duration-300 ease-in-out transform hover:bg-gray-300">Подробнее</a></td>
                             </tr> 
                         @endforeach
                     </tbody>

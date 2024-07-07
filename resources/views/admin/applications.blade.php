@@ -9,7 +9,7 @@
             <span class="ml-2 font-bold">Заявки</span>
         </div>
         <div class="rounded-full py-2 px-6 border text-sm transition-all duration-300 hover:bg-green-500 hover:text-white mr-4 mb-4 inline-flex items-center bg-white text-black">
-            <a href="{{ route('admin.memberships') }}">
+            <a href="{{ route('memberships') }}">
                 <span>Абонементы</span>
             </a>
         </div>
@@ -59,9 +59,9 @@
                         <tr style="background-color: #fef08a; color: #f97316">
                             <th class="border border-gray-400 px-4 py-2 w-1/12">#</th>
                             <th class="border border-gray-400 px-4 py-2 w-3/12">Имя</th>
-                            <th class="border border-gray-400 px-4 py-2 w-3/12">Телефон</th>
+                            <th class="border border-gray-400 px-4 py-2 w-2/12">Телефон</th>
                             <th class="border border-gray-400 px-4 py-2 w-3/12">Тип Заявки</th>
-                            <th class="border border-gray-400 px-4 py-2 w-2/12"></th>
+                            <th class="border border-gray-400 px-4 py-2 w-3/12"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,9 +87,9 @@
                         <tr class="bg-gray-200">
                             <th class="border border-gray-400 px-4 py-2 w-1/12">#</th>
                             <th class="border border-gray-400 px-4 py-2 w-3/12">Имя</th>
-                            <th class="border border-gray-400 px-4 py-2 w-3/12">Телефон</th>
+                            <th class="border border-gray-400 px-4 py-2 w-2/12">Телефон</th>
                             <th class="border border-gray-400 px-4 py-2 w-3/12">Тип Заявки</th>
-                            <th class="border border-gray-400 px-4 py-2 w-2/12"></th>
+                            <th class="border border-gray-400 px-4 py-2 w-3/12"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,7 +99,17 @@
                                 <td class="border border-gray-400 px-4 py-2">{{$app->name}}</td>
                                 <td class="border border-gray-400 px-4 py-2"><a href="https://wa.me/{{$app->phone}}" target="_blank" style="text-decoration: underline; ">{{$app->phone}}</a></td>
                                 <td class="border border-gray-400 px-4 py-2">{{$app->practice->type}}</td>
-                                <td class="border border-gray-400 px-4 py-2 text-center">@if($app->status == 3) отказ от услуг @else <a href="{{ route('admin.memberships_create', ['id' => $app->id]) }} " style="text-decoration: underline;">Создать абонемент</a> @endif</td>
+                                <td class="border border-gray-400 px-4 py-2 text-center">
+                                    @if($app->status == 3)
+                                        Отказ от услуг
+                                    @elseif($app->practice->type == "Групповые тренировки" || $app->practice->type == "Профессиональные групповые тренировки")
+                                        <a href="{{ route('memberships.create', ['id' => $app->id]) }}" style="text-decoration: underline;">Создать абонемент</a>
+                                    @elseif($app->practice->type == "Персональные тренировки")
+                                        <a href="{{ route('individual_practices.create', ['id' => $app->id]) }}" style="text-decoration: underline;">Записать на индивидуалку</a>
+                                    @elseif($app->practice->type == "Аренда")
+                                        <a href="{{ route('individual_practices.create', ['id' => $app->id]) }}" style="text-decoration: underline;">Забронировать корт</a>
+                                    @endif
+                                </td>
                             </tr> 
                         @endforeach
                     </tbody>
