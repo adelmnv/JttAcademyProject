@@ -67,7 +67,7 @@ class IndividualPracticeController extends Controller
         $indv_practice->court_number = $validated['court_number'];
         $indv_practice->save();
 
-        return redirect()->route('memberships')->with('success', 'Изменения успешно сохранены');
+        return redirect()->route('admin.schedule')->with('success', 'Изменения успешно сохранены');
     }
 
     public function create($id = null){
@@ -126,6 +126,6 @@ class IndividualPracticeController extends Controller
             $application->save();
         }
 
-        return redirect()->route('memberships')->with('success', 'Изменения успешно сохранены');
+        return redirect()->route('admin.applications')->with('success', 'Изменения успешно сохранены');
     }
 }

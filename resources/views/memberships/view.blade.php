@@ -40,7 +40,7 @@
                     <h2 class="text-xl font-bold mb-2">Информация о группе</h2>
                     <p><strong>Группа:</strong><a href=""></a> {{ $membership->group->practice->type }}</p>
                     <p><strong>Возрастная категория:</strong> {{ $membership->practice_type_name }}</p>
-                    <p><strong>Тренер:</strong> <a href="{{ route('coaches.view', ['coach_id' => $coach->id]) }}" class="text-green-600 hover:text-green-800 transition-colors duration-300">{{ $group->coach->fio }}</a></p>
+                    <p><strong>Тренер:</strong> <a href="{{ route('coaches.view', ['coach_id' => $membership->group->coach->id]) }}" class="text-green-600 hover:text-green-800 transition-colors duration-300">{{ $membership->group->coach->fio }}</a></p>
                     <p><strong>Дни тренировок:</strong> {{ $membership->group->days_as_names }}</p>
                     <p><strong>Время начало тренировок:</strong> {{ $membership->group->time }} - {{$membership->group->duration}} ч.</p>
                     <p><strong>Стоимость:</strong> {{ $membership->group->practice->price }} тг</p>

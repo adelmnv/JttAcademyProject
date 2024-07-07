@@ -36,7 +36,7 @@
                 <div class="mb-4">
                     <h2 class="text-xl font-bold mb-2">Информация об индивидуальной тренировке</h2>
                     <p><strong>Тип тренировки:</strong> {{ $indv_practice->practice->type }} {{ $indv_practice->type_name }}</p>
-                    <p><strong>Тренер:</strong> <a href="{{ route('coaches.view', ['coach_id' => $indv_practice->coach->id]) }}" class="text-green-600 hover:text-green-800 transition-colors duration-300">{{ $group->coach->fio }}</a></p>
+                    <p><strong>Тренер:</strong> <a href="{{ route('coaches.view', ['coach_id' => $indv_practice->coach->id]) }}" class="text-green-600 hover:text-green-800 transition-colors duration-300">{{ $indv_practice->coach->fio }}</a></p>
                     <p><strong>Дата тренировки:</strong>{{ strftime("%d.%m.%Y", strtotime($indv_practice->date))}}</p>
                     <p><strong>Время начало тренировки:</strong> {{ $indv_practice->time }} - {{$indv_practice->duration}} ч.</p>
                     <p><strong>Номер корта:</strong> {{ $indv_practice->court_number }} корт </p>

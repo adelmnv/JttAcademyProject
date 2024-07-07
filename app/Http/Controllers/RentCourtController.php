@@ -52,7 +52,7 @@ class RentCourtController extends Controller
         $rent->court_number = $validated['court_number'];
         $rent->save();
 
-        return redirect()->route('memberships')->with('success', 'Изменения успешно сохранены');
+        return redirect()->route('admin.schedule')->with('success', 'Изменения успешно сохранены');
     }
 
     public function create($id = null){
@@ -99,6 +99,6 @@ class RentCourtController extends Controller
             $application->save();
         }
 
-        return redirect()->route('memberships')->with('success', 'Изменения успешно сохранены');
+        return redirect()->route('admin.applications')->with('success', 'Изменения успешно сохранены');
     }
 }
