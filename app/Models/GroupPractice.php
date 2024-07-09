@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class GroupPractice extends Model
 {
@@ -48,5 +49,13 @@ class GroupPractice extends Model
         }
 
         return implode(', ', $daysAsNames);
+    }
+
+    public function getEndTimeAttribute()
+    {
+        $startTime = Carbon::createFromFormat('H:i', $this->time);
+        $endTime = $startTime->copy()->addHours($this->duration);
+
+        return $endTime->format('H:i');
     }
 }

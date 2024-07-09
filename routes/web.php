@@ -97,3 +97,5 @@ Route::post('/dash/rent/create/',[RentCourtController::class,'save'])->name('ren
 Route::get('/dash/groups/{id?}/view', [GroupPracticeController::class, 'view'])->name('group_practices.view')->middleware('auth');
 Route::get('/dash/groups/create/',[GroupPracticeController::class,'create'])->name('group_practices.create')->middleware('auth');
 Route::post('/dash/groups/create/',[GroupPracticeController::class,'save'])->name('group_practices.save')->middleware('auth');
+Route::get('/dash/groups/{id?}/edit/',[GroupPracticeController::class,'edit'])->name('group_practices.edit')->middleware('auth');
+Route::post('/dash/groups/{id?}/update/',[GroupPracticeController::class,'update'])->name('group_practices.update')->middleware('auth');

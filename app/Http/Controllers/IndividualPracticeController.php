@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Traits\PracticeTimeValidationTrait;
+use App\Traits\PracticeTimeConflictTrait;
 use App\Models\{IndividualPractice, Application, Type, Coach, Practice};
 use Carbon\Carbon;
 
 class IndividualPracticeController extends Controller
 {
     use PracticeTimeValidationTrait;
-
+    use PracticeTimeConflictTrait;
 
     public function view($id){
         $indv_practice = IndividualPractice::find($id);
@@ -48,13 +49,7 @@ class IndividualPracticeController extends Controller
         ]);
 
         $this->validatePracticeTime($validated['time'], $validated['duration']);
-
-
-        //Проверка на то что уже существует тренировка (групповая, личная, аренда) в это время
-        //...........
-
-        //Проверка на то что в это время идет турнир
-        //...........
+        $this->checkIndividualPracticeTimeConflict($validated['time'], $validated['duration'], $validated['date'], $validated['court_number'], $validated['coach_id']);
 
         $indv_practice = IndividualPractice::find($id);
         $indv_practice->name = $validated['name'];
@@ -103,11 +98,7 @@ class IndividualPracticeController extends Controller
 
         $this->validatePracticeTime($validated['time'], $validated['duration']);
         $this->validateDateTimeNotPassed($validated['date'], $validated['time']);
-
-        //Проверка на то что уже существует тренировка в это время
-        //...........
-        //Проверка на то что в это время идет турнир
-        //...........
+        $this->checkIndividualPracticeTimeConflict($validated['time'], $validated['duration'], $validated['date'], $validated['court_number'], $validated['coach_id']);
 
         $indv_practice = new IndividualPractice();
         $indv_practice->name = $validated['name'];
@@ -126,6 +117,6 @@ class IndividualPracticeController extends Controller
             $application->save();
         }
 
-        return redirect()->route('admin.applications')->with('success', 'Изменения успешно сохранены');
+        return redirect()->route('admin.applications')->with('success', 'Индивидульная тренировка успешно добавлена');
     }
 }

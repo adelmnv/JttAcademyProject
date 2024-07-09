@@ -52,7 +52,7 @@
                 </div>
                 <div class="flex items-center justify-end  mb-4">
                     <a href="{{ route('admin.schedule') }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300">Назад</a>
-                    <a href="{{ route('individual_practices.edit', ['id' => $group->id]) }}" class="bg-yellow-500 text-white ml-4 px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300">Редактировать</a>
+                    <a href="{{ route('group_practices.edit', ['id' => $group->id]) }}" class="bg-yellow-500 text-white ml-4 px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300">Редактировать</a>
                 </div>
             </div>
         </div>

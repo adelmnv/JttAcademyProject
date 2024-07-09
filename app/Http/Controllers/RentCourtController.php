@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Traits\PracticeTimeValidationTrait;
+use App\Traits\PracticeTimeConflictTrait;
 use App\Models\{RentCourt, Application, Type, Practice};
 
 class RentCourtController extends Controller
 {
     use PracticeTimeValidationTrait;
-
+    use PracticeTimeConflictTrait;
 
     public function view($id){
         $rent = RentCourt::find($id);
@@ -36,12 +37,7 @@ class RentCourtController extends Controller
         ]);
 
         $this->validatePracticeTime($validated['time'], $validated['duration']);
-
-
-        //Проверка на то что уже существует тренировка (групповая, личная, аренда) в это время
-        //...........
-        //Проверка на то что в это время идет турнир
-        //...........
+        $this->checkCourtRentTimeConflict($validated['time'], $validated['duration'], $validated['date'], $validated['court_number']);
 
         $rent = RentCourt::find($id);
         $rent->name = $validated['name'];
@@ -78,11 +74,7 @@ class RentCourtController extends Controller
 
         $this->validatePracticeTime($validated['time'], $validated['duration']);
         $this->validateDateTimeNotPassed($validated['date'], $validated['time']);
-
-        //Проверка на то что уже существует тренировка (групповая, личная, аренда) в это время
-        //...........
-        //Проверка на то что в это время идет турнир
-        //...........
+        $this->checkCourtRentTimeConflict($validated['time'], $validated['duration'], $validated['date'], $validated['court_number']);
 
         $rent = new RentCourt();
         $rent->name = $validated['name'];
@@ -99,6 +91,6 @@ class RentCourtController extends Controller
             $application->save();
         }
 
-        return redirect()->route('admin.applications')->with('success', 'Изменения успешно сохранены');
+        return redirect()->route('admin.applications')->with('success', 'Запись об аренде успешно сохранена');
     }
 }

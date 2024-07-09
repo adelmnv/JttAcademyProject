@@ -44,9 +44,13 @@ class MembershipController extends Controller
 
         $groups = GroupPractice::whereDoesntHave('memberships')
         ->orWhereHas('memberships', function ($query) {
-            $query->havingRaw('COUNT(*) <= group_practices.capacity');
+            $query->havingRaw('COUNT(*) < group_practices.capacity');
         })
         ->get();
+
+        if (!$groups->contains($membership->group)) {
+            $groups->prepend($membership->group);
+        }
 
         $groups->transform(function ($group) {
             $type = Type::find($group->practice->type_id);

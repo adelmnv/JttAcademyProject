@@ -41,26 +41,22 @@ class AdminController extends Controller
     }
 
     public function schedule(Request $request) {
-        // Retrieve month and year from request or default to current month and year
         $month = $request->input('month', Carbon::now()->month);
         $year = $request->input('year', Carbon::now()->year);
     
-        // Calculate previous and next month and year for navigation
         $prevMonth = Carbon::createFromDate($year, $month)->subMonth()->month;
         $prevYear = Carbon::createFromDate($year, $month)->subMonth()->year;
         $nextMonth = Carbon::createFromDate($year, $month)->addMonth()->month;
         $nextYear = Carbon::createFromDate($year, $month)->addMonth()->year;
     
-        // Determine the current month name
         $currentMonthName = Carbon::createFromDate($year, $month)->monthName;
         $currentYear = $year;
     
-        // Get the start and end dates of the current month
         $startDate = Carbon::createFromDate($year, $month, 1)->startOfWeek();
         $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth()->endOfWeek();
     
         // Create an array of weekdays for the header
-        $weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        $weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
     
         $dates = [];
         $date = $startDate->copy();
@@ -77,23 +73,10 @@ class AdminController extends Controller
         return view('admin.schedule', compact('weekdays', 'currentMonthName', 'currentYear', 'dates', 'prevMonth', 'prevYear', 'nextMonth', 'nextYear'));
     }
 
-
-    // public function dailySchedule($date) {
-    //     $date = Carbon::parse($date);
-    
-    //     $groupPractices = GroupPractice::whereRaw("FIND_IN_SET(?, days_of_week)", [$date->dayOfWeek + 1])->orderBy('time')->get();
-    //     $individualPractices = IndividualPractice::whereDate('date', $date->format('Y-m-d'))->orderBy('time')->get();
-    //     $courtRents = RentCourt::whereDate('date', $date->format('Y-m-d'))->orderBy('time')->get();
-
-    //     $tournament = Tournament::whereDate('start_date', '<=', $date->format('Y-m-d'))->whereDate('end_date', '>=', $date->format('Y-m-d'))->first();
-    
-    //     return view('admin.daily_schedule', compact('date', 'groupPractices', 'individualPractices', 'courtRents', 'tournament'));
-    // }
-
     public function dailySchedule($date) {
         $date = Carbon::parse($date);
     
-        $groupPractices = GroupPractice::whereRaw("FIND_IN_SET(?, days_of_week)", [$date->dayOfWeek + 1])->orderBy('time')->get()->map(function($practice) {
+        $groupPractices = GroupPractice::whereRaw("FIND_IN_SET(?, days_of_week)", [$date->dayOfWeek])->orderBy('time')->get()->map(function($practice) {
             $startTime = Carbon::parse($practice->time);
             $endTime = $startTime->copy()->addHours($practice->duration);
             $practice->formatted_time = $startTime->format('H:i') . ' - ' . $endTime->format('H:i');

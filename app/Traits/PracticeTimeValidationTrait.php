@@ -21,7 +21,7 @@ trait PracticeTimeValidationTrait
 
         $practiceEndTime = Carbon::parse($time)->addHours($duration);
         if ($practiceEndTime->greaterThan($closeTime) || $practiceEndTime->lessThan($startTime)) {
-            throw ValidationException::withMessages(['duration' => 'The practice must end before 23:00.']);
+            throw ValidationException::withMessages(['time' => 'The practice must end before 23:00.']);
         }
 
         return true;

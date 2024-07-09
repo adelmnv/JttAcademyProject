@@ -3,6 +3,19 @@
 @section('page_title', 'Панель - Расписание - ')
 
 @section('content')
+
+@if(session('success'))
+            <div id="successMessage" class="bg-green-500 text-white p-4 mb-4 rounded-md shadow-md">
+                {{ session('success') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            </script>
+@endif
+
 <div class="container mx-auto bg-white flex-grow p-4">
     <div class="flex flex-wrap items-center">
         <div class="rounded-full py-2 px-6 border text-sm transition-all duration-300 hover:bg-green-500 hover:text-white mr-4 mb-4 inline-flex items-center bg-white text-black">
