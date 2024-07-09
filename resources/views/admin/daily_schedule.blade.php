@@ -78,7 +78,7 @@
                             <span>Индивидуальная тренировка с {{ $entry->coach->fio }}</span>
                         </a>
                     @elseif ($entry->type == 'rent')
-                        <a href="{{ route('rent.view', ['id' => $entry->id]) }}" class="border p-2 mb-2 block">
+                        <a href="{{ route('rent_courts.view', ['id' => $entry->id]) }}" class="border p-2 mb-2 block">
                             <span>{{ $entry->formatted_time }}</span> - 
                             <span>Аренда корта {{ $entry->name }}</span>
                         </a>
