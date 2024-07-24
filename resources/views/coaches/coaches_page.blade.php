@@ -4,6 +4,19 @@
 
 
 @section('content')
+
+    @if(session('success'))
+            <div id="successMessage" class="bg-green-500 text-white p-4 mb-4 rounded-md shadow-md">
+                {{ session('success') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            </script>
+    @endif
+    
     <div class="container mx-auto bg-white flex-grow p-4">
     <h1 class="text-4xl font-bold text-center my-8">Наши Тренеры</h1>
         <div class="flex flex-wrap justify-center gap-4">

@@ -4,6 +4,18 @@
 
 
 @section('content')
+    @if(session('success'))
+            <div id="successMessage" class="bg-green-500 text-white p-4 mb-4 rounded-md shadow-md">
+                {{ session('success') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            </script>
+    @endif
+    
     <div class="container mx-auto bg-white flex-grow p-4">
         <div class="flex flex-wrap items-center">
             @foreach ($categories as $category)

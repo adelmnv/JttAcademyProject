@@ -11,8 +11,8 @@ class MembershipController extends Controller
 {
     public function memberships(){
         $currentDate = Carbon::now()->toDateString();
-        $memberships = Membership::whereDate('paid_until', '>=', $currentDate)->get();
-        $expired_memberships = Membership::whereDate('paid_until', '<', $currentDate)->get();
+        $memberships = Membership::whereDate('paid_until', '>=', $currentDate)->OrderBy('name')->get();
+        $expired_memberships = Membership::whereDate('paid_until', '<', $currentDate)->OrderBy('name')->get();
 
         $memberships->transform(function ($membership) {
             $daysLeft = Carbon::now()->diffInDays($membership->paid_until, false);
@@ -46,7 +46,7 @@ class MembershipController extends Controller
         ->orWhereHas('memberships', function ($query) {
             $query->havingRaw('COUNT(*) < group_practices.capacity');
         })
-        ->get();
+        ->OrderBy('time')->get();
 
         if (!$groups->contains($membership->group)) {
             $groups->prepend($membership->group);
@@ -93,7 +93,7 @@ class MembershipController extends Controller
         ->orWhereHas('memberships', function ($query) {
             $query->havingRaw('COUNT(*) < group_practices.capacity');
         })
-        ->get();
+        ->OrderBy('time')->get();
 
         $groups->transform(function ($group) {
             $type = Type::find($group->practice->type_id);

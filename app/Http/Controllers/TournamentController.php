@@ -119,7 +119,7 @@ class TournamentController extends Controller
             'tournament_category_id' => 'required|numeric',
             'start_date' => 'required|date|after:today',
             'end_date' => 'required|date|after:start_date',
-            'deadline' => 'required|date|before:start_date',
+            'deadline' => 'required|date|before:start_date|after:today',
             'status' => 'required|numeric|min:0|max:1',
             'files.*' => 'nullable|file|max:10240'
         ], [

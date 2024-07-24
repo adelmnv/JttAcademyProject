@@ -33,7 +33,7 @@ trait PracticeTimeValidationTrait
         $selectedDateTime = Carbon::parse($date . ' ' . $time);
 
         if ($selectedDateTime <= $currentDateTime) {
-            throw new \Exception('That date and time have already passed.');
+            throw ValidationException::withMessages(['time' =>'That date and time have already passed.']);
         }
     }
 }

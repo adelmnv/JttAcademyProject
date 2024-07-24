@@ -64,7 +64,7 @@ class PostController extends Controller
     
         $post->save();
     
-        return redirect()->route('posts');
+        return redirect()->route('posts')->with('success', 'Пост обновлен успешно.');
     }
     
 

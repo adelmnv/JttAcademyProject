@@ -125,7 +125,7 @@
                                     @elseif($app->practice->type == "Персональные тренировки")
                                         <a href="{{ route('individual_practices.create', ['id' => $app->id]) }}" style="text-decoration: underline;">Записать на индивидуалку</a>
                                     @elseif($app->practice->type == "Аренда")
-                                        <a href="{{ route('individual_practices.create', ['id' => $app->id]) }}" style="text-decoration: underline;">Забронировать корт</a>
+                                        <a href="{{ route('rent_courts.create', ['id' => $app->id]) }}" style="text-decoration: underline;">Забронировать корт</a>
                                     @endif
                                 </td>
                             </tr> 

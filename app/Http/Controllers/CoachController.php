@@ -55,7 +55,7 @@ class CoachController extends Controller
     
         $coach->save();
     
-        return redirect()->route('coaches');
+        return redirect()->route('coaches')->with('success', 'Тренер обновлен успешно.');
     }
 
     public function create(){

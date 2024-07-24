@@ -48,7 +48,7 @@ class PlayerController extends Controller
     
         $player->save();
     
-        return redirect()->route('players');
+        return redirect()->route('players')->with('success', 'Игрок обновлен успешно.');
     }
     
 
