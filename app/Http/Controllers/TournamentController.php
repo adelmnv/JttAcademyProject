@@ -264,17 +264,6 @@ class TournamentController extends Controller
             return redirect()->back()->with('error', 'Участник не подходит по возрасту для данной возрастной категории турнира.');
         }
 
-        $existingParticipant = Participant::where([
-            'fio' => $validated['fio'],
-            'birth_date' => $validated['birth_date'],
-            'gender' => $validated['gender'],
-            'tournament_id' => $validated['tournament_id']
-        ])->first();
-    
-        if ($existingParticipant) {
-            return redirect()->back()->with('error', 'Участник с такими данными уже зарегистрирован.');
-        }
-
         $participant = Participant::find($participant_id);
         $participant->tournament_id = $validated['tournament_id'];
         $participant->fio = $validated['fio'];
