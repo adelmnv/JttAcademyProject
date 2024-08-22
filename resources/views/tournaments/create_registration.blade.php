@@ -5,7 +5,7 @@
 @section('content')
     <div class="container mx-auto bg-white flex-grow p-4">
         <div class="max-w-md mx-auto bg-white p-8 rounded-md shadow-md">
-            <h2 class="text-3xl font-semibold mb-6">Хочу заявится на "{{ $tournament->name }}"</h2>
+            <h2 class="text-3xl font-semibold mb-6">Хочу заявится на "{{ $tournament->name }}" {{ $tournament->category->name }}</h2>
             <form action="{{ route('tournaments.store_registration', ['tournament_id' => $tournament->id]) }}" method="post">
                 <input type="hidden" name="tournament_id" value="{{$tournament->id}}">
                 @csrf
