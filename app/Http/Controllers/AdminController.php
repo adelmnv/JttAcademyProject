@@ -55,7 +55,6 @@ class AdminController extends Controller
         $startDate = Carbon::createFromDate($year, $month, 1)->startOfWeek();
         $endDate = Carbon::createFromDate($year, $month, 1)->endOfMonth()->endOfWeek();
     
-        // Create an array of weekdays for the header
         $weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
     
         $dates = [];
