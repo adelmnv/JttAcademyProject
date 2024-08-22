@@ -167,7 +167,7 @@
         @else
             @foreach($files as $file)
                 <div>
-                    <h3 class="mt-3 mb-3"><a class="hover:text-green-500" href="{{ $file->file_path }}" download="{{ $file->file_name }}">скачать файл {{ $file->file_name }}</a></h3>
+                    <h3 class="mt-3 mb-3"><a class="hover:text-green-500" href="{{ secure_asset($file->file_path) }}" download="{{ $file->file_name }}">скачать файл {{ $file->file_name }}</a></h3>
                     <iframe src="{{ $file->file_path }}" width="100%" height="400px"></iframe>
                 </div>
             @endforeach
